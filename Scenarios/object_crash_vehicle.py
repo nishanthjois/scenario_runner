@@ -30,7 +30,7 @@ class StationaryObjectCrossing(BasicScenario):
     Location: Town03
     """
 
-    timeout = 60
+    timeout = 30
 
     # ego vehicle parameters
     _ego_vehicle_model = 'vehicle.lincoln.mkz2017'
@@ -39,7 +39,6 @@ class StationaryObjectCrossing(BasicScenario):
         carla.Location(x=_ego_vehicle_start_x, y=129, z=1),
         carla.Rotation(yaw=180))
     _ego_vehicle_velocity_allowed = 20
-    _ego_vehicle_distance_to_other = 35
 
     # other vehicle parameters
     _other_vehicle_model = 'vehicle.diamondback.century'
@@ -83,18 +82,15 @@ class StationaryObjectCrossing(BasicScenario):
 
         max_velocity_criterion = MaxVelocityTest(
             self.ego_vehicle,
-            self._ego_vehicle_velocity_allowed,
-            optional=True)
+            self._ego_vehicle_velocity_allowed)
         collision_criterion = CollisionTest(self.ego_vehicle)
-        keep_lane_criterion = KeepLaneTest(self.ego_vehicle, optional=True)
-        driven_distance_criterion = DrivenDistanceTest(
+        reached_region = ReachedRegionTest(
             self.ego_vehicle,
-            self._ego_vehicle_distance_to_other)
-
+            80.5, 86,
+            126, 132.6)
         criteria.append(max_velocity_criterion)
         criteria.append(collision_criterion)
-        criteria.append(keep_lane_criterion)
-        criteria.append(driven_distance_criterion)
+        criteria.append(reached_region)
 
         return criteria
 
