@@ -156,7 +156,7 @@ class ScenarioManager(object):
         """
         Trigger the start of the scenario and wait for it to finish/fail
         """
-        print("Running scenario {}".format(self.scenario_tree.name))
+        print("ScenarioManager: Running scenario {}".format(self.scenario_tree.name))
         self.start_system_time = time.time()
         start_game_time = GameTime.get_time()
 
@@ -173,7 +173,7 @@ class ScenarioManager(object):
         self.scenario_duration_game = end_game_time - start_game_time
 
         if self.scenario_tree.status == py_trees.common.Status.FAILURE:
-            print("Terminated due to failure")
+            print("ScenarioManager: Terminated due to failure")
 
     def _tick_scenario(self, timestamp):
         """
